@@ -1,0 +1,26 @@
+[project]
+name = "pdfless"
+version = "0.1.0"
+description = "PDF content extractor"
+authors = [
+      {name = "Rafael Teixeira Costa", email = "rafael.txct@gmail.com"}
+]
+license = "MIT"
+requires-python = ">=3.14,<4.0"
+dependencies = [
+    "pymupdf (>=1.27.2.3,<2.0.0.0)",
+    "deep-translator (>=1.11.4,<2.0.0)"
+]
+
+[dependency-groups]
+dev = [
+    "ruff (>=0.15.14,<0.16.0)",
+    "pytest (>=9.0.3,<10.0.0)"
+]
+
+[tool.pytest.ini_options]
+pythonpath = [".", "src"]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
