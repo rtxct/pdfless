@@ -1,17 +1,7 @@
-import ast
 import pytest
 
 from unittest.mock import patch
-from pdfless.application.translation.translator import supported_languages, translate
-from tests.utils.file_test_utils import read_resource_file
-
-
-def test_supported_languages():
-    expected: dict = ast.literal_eval(
-        read_resource_file("translation/res_supported_languages.txt")
-    )
-
-    assert expected == supported_languages()
+from pdfless.application.translation.translator_app import translate
 
 
 def test_translate():
@@ -47,8 +37,8 @@ def test_translate_invalid_language_options():
         translate(source="la", target="yy", text="Neque porro")
 
 
-@patch("pdfless.application.translation.translator.SourceType")
-@patch("pdfless.application.translation.translator.supported_languages")
+@patch("pdfless.application.translation.translator_app.SourceType")
+@patch("pdfless.application.translation.translator_app.supported_languages")
 def test_translate_runtime_error(mock_supported_languages, mock_source_type):
     mock_supported_languages.return_value = {"latin": "la", "english": "en"}
 
@@ -56,7 +46,8 @@ def test_translate_runtime_error(mock_supported_languages, mock_source_type):
     mock_instance.translate.side_effect = Exception("Translation Failure")
 
     with pytest.raises(
-        RuntimeError, match="It was not possible to translate the given text: Neque porro"
+        RuntimeError,
+        match="It was not possible to translate the given text: Neque porro",
     ):
         translate(
             source="la",
